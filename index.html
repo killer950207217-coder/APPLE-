@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="uz"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Apple 3D</title>
+<style>
+:root{--bg:#fff;--fg:#1d1d1f;--mut:#6e6e73;--tile:#f5f5f7;--dk:#000;--dkfg:#f5f5f7;--blue:#0071e3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111;--fg:#f5f5f7;--mut:#a1a1a6;--tile:#1d1d1f}}
+:root[data-theme="dark"]{--bg:#111;--fg:#f5f5f7;--mut:#a1a1a6;--tile:#1d1d1f}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:-apple-system,"SF Pro Display","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;display:flex;gap:26px;justify-content:center;align-items:center;height:44px;background:rgba(22,22,23,.85);backdrop-filter:blur(20px);font-size:12px;overflow-x:auto;white-space:nowrap;padding:0 16px}
+nav a{color:#e8e8ed;text-decoration:none;opacity:.85}nav a:hover{opacity:1}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:rgba(22,22,23,.85);z-index:10}
+section.big{text-align:center;padding:56px 16px 0;overflow:hidden}
+section.big.dark{background:var(--dk);color:var(--dkfg)}
+h1,h2,h3{margin:0;letter-spacing:-.02em}
+h1{font-size:clamp(40px,7vw,80px);font-weight:700}h2{font-size:clamp(32px,5vw,56px);font-weight:700}
+h3{font-size:clamp(26px,3.5vw,40px);font-weight:700}
+p.sub{font-size:clamp(18px,2.2vw,26px);margin:10px 0 18px;color:var(--mut)}
+.dark p.sub{color:#a1a1a6}
+.cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;font-size:19px}
+.cta a{color:var(--blue);text-decoration:none}.cta a.b{background:var(--blue);color:#fff;border-radius:980px;padding:8px 18px;font-size:17px}
+.cta a:hover{text-decoration:underline}
+.stage{width:100%;height:min(70vh,560px);touch-action:pan-y;cursor:grab}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}
+.tile{background:var(--tile);border-radius:22px;text-align:center;padding:44px 16px 0;overflow:hidden}
+.tile .stage{height:340px}
+.tile.dk{background:#000;color:#f5f5f7}.tile.dk p.sub{color:#a1a1a6}
+footer{padding:28px 16px calc(28px + env(safe-area-inset-bottom,0px));font-size:12px;color:var(--mut);max-width:980px;margin:auto}
+footer div{display:flex;flex-wrap:wrap;gap:6px 22px;margin-bottom:12px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}nav{justify-content:flex-start}}
+</style></head><body>
+<nav><a href="#top">&#63743;</a><a href="#">Store</a><a href="#">Mac</a><a href="#">iPad</a><a href="#phone">iPhone</a><a href="#duo">Duo</a><a href="#watch">Watch</a><a href="#pods">AirPods</a><a href="#">Support</a></nav>
+
+<section class="big dark" id="phone">
+<h1>iPhone Pro</h1><p class="sub">Yangi avlod. Haqiqiy 3D.</p>
+<div class="cta"><a href="#">Batafsil &rsaquo;</a><a class="b" href="#">Sotib olish</a></div>
+<div class="stage" data-k="phone"></div></section>
+
+<section class="big" id="duo">
+<h2>iPhone Duo</h2><p class="sub">Ochilsa — katta ekran.</p>
+<div class="cta"><a href="#">Batafsil &rsaquo;</a><a class="b" href="#">Sotib olish</a></div>
+<div class="stage" data-k="duo"></div></section>
+
+<div class="grid">
+<div class="tile" id="ipad"><h3>iPad</h3><p class="sub">Tez. Yengil. Ijodiy.</p><div class="cta"><a href="#">Batafsil &rsaquo;</a><a href="#">Sotib olish &rsaquo;</a></div><div class="stage" data-k="ipad"></div></div>
+<div class="tile dk" id="watch"><h3>Watch</h3><p class="sub">Salomatlik bilan bir qo‘lda.</p><div class="cta"><a href="#">Batafsil &rsaquo;</a><a href="#">Sotib olish &rsaquo;</a></div><div class="stage" data-k="watch"></div></div>
+<div class="tile dk" id="pods"><h3>AirPods</h3><p class="sub">Shovqinsiz musiqa.</p><div class="cta"><a href="#">Batafsil &rsaquo;</a><a href="#">Sotib olish &rsaquo;</a></div><div class="stage" data-k="pods"></div></div>
+<div class="tile" id="card"><h3>Card</h3><p class="sub">Har xaridda keshbek.</p><div class="cta"><a href="#">Batafsil &rsaquo;</a><a href="#">Ariza berish &rsaquo;</a></div><div class="stage" data-k="card"></div></div>
+</div>
+
+<footer><div><span>Store</span><span>Mac</span><span>iPad</span><span>iPhone</span><span>Watch</span><span>AirPods</span><span>Support</span></div>
+Bu o‘quv namunasi: rasmlar three.js yordamida kodda yaratilgan 3D modellar. Barcha belgilar tegishli egalariga tegishli.</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+var T=window.THREE;
+function rbox(w,h,d,r,mat){var s=new T.Shape(),x=-w/2,y=-h/2;
+s.moveTo(x+r,y);s.lineTo(x+w-r,y);s.quadraticCurveTo(x+w,y,x+w,y+r);s.lineTo(x+w,y+h-r);s.quadraticCurveTo(x+w,y+h,x+w-r,y+h);s.lineTo(x+r,y+h);s.quadraticCurveTo(x,y+h,x,y+h-r);s.lineTo(x,y+r);s.quadraticCurveTo(x,y,x+r,y);
+var g=new T.ExtrudeGeometry(s,{depth:d,bevelEnabled:true,bevelSize:.03,bevelThickness:.03,bevelSegments:2,curveSegments:10});g.center();return new T.Mesh(g,mat)}
+function M(c,m,r){return new T.MeshStandardMaterial({color:c,metalness:m,roughness:r})}
+function tex(w,h,a,b,fn){var c=document.createElement('canvas');c.width=w;c.height=h;var x=c.getContext('2d'),g=x.createLinearGradient(0,0,w,h);g.addColorStop(0,a);g.addColorStop(1,b);x.fillStyle=g;x.fillRect(0,0,w,h);if(fn)fn(x,w,h);return new T.CanvasTexture(c)}
+function scr(w,h,t,z){var m=new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({map:t}));m.position.z=z;return m}
+function apps(x,w,h){var cols=['#ff5f57','#febc2e','#28c840','#0a84ff','#bf5af2','#ff9f0a','#64d2ff','#ff375f'];
+for(var i=0;i<16;i++){x.fillStyle=cols[i%8];var s=w/5,cx=(i%4)*s*1.15+s*.28,cy=h*.2+Math.floor(i/4)*s*1.3;x.beginPath();x.roundRect?x.roundRect(cx,cy,s,s,s*.25):x.rect(cx,cy,s,s);x.fill()}}
+var B={
+phone:function(){var g=new T.Group(),red=M(0x7a1f2b,.8,.25);
+g.add(rbox(1.7,3.5,.22,.3,red));
+g.add(scr(1.52,3.3,tex(300,640,'#ff6a88','#3a1c71',apps),.15));
+var bump=rbox(.95,.95,.08,.22,M(0x5c1520,.8,.3));bump.position.set(-.3,1.2,-.17);g.add(bump);
+[[-.5,1.45],[-.12,1.45],[-.31,1.0]].forEach(function(p){var c=new T.Mesh(new T.CylinderGeometry(.19,.19,.1,24),M(0x111111,.9,.15));c.rotation.x=Math.PI/2;c.position.set(p[0],p[1],-.24);g.add(c)});
+var d=new T.Mesh(new T.CircleGeometry(.28,32),M(0xe8c9cf,1,.2));d.position.set(0,-.2,-.16);d.rotation.y=Math.PI;g.add(d);g.scale.setScalar(1.05);return g},
+duo:function(){var g=new T.Group(),m=M(0x2b2f3a,.8,.3);
+[-1,1].forEach(function(s){var p=new T.Group();p.add(rbox(1.7,3.2,.16,.25,m));p.add(scr(1.54,3.04,tex(300,560,s<0?'#4facfe':'#f093fb','#00f2fe',s<0?apps:null),.1));p.position.x=s*.9;p.rotation.y=-s*.3;g.add(p)});
+g.rotation.x=-.1;g.scale.setScalar(.95);return g},
+ipad:function(){var g=new T.Group();g.add(rbox(2.6,3.5,.14,.2,M(0xc9d6e6,.9,.25)));
+g.add(scr(2.4,3.3,tex(300,400,'#f6d365','#fda085',apps),.1));g.rotation.z=.08;return g},
+watch:function(){var g=new T.Group(),k=M(0x5a4a3a,.9,.3);
+var s1=rbox(.95,1.8,.1,.1,M(0x5b6b3e,.1,.8));s1.position.y=1.35;s1.position.z=-.05;var s2=s1.clone();s2.position.y=-1.35;g.add(s1,s2);
+g.add(rbox(1.3,1.55,.38,.3,k));
+g.add(scr(1.08,1.33,tex(240,280,'#000','#111',function(x,w,h){x.strokeStyle='#30d158';x.lineWidth=12;x.beginPath();x.arc(w/2,h/2,80,0,5);x.stroke();x.fillStyle='#fff';x.font='bold 56px sans-serif';x.textAlign='center';x.fillText('72',w/2,h/2+18)}),.22));
+g.scale.setScalar(1.05);return g},
+pods:function(){var g=new T.Group(),w=M(0xf4f4f6,.1,.35);
+[-1,1].forEach(function(s){var p=new T.Group(),b=new T.Mesh(new T.SphereGeometry(.55,32,24),w);b.scale.set(1,.95,.9);var st=new T.Mesh(new T.CylinderGeometry(.14,.1,1.3,24),w);st.position.y=-.8;var t=new T.Mesh(new T.SphereGeometry(.3,24,16),M(0xdadadd,0,.9));t.position.set(s*.35,.15,.42);p.add(b,st,t);p.position.x=s*.95;p.rotation.z=s*.25;g.add(p)});return g},
+card:function(){var g=new T.Group();
+g.add(rbox(3.4,2.15,.03,.18,M(0xffffff,.3,.3)));
+g.add(scr(3.3,2.05,tex(520,330,'#ffffff','#e4e4ea',function(x,w,h){x.fillStyle='#1d1d1f';x.font='28px sans-serif';x.fillText('A. Karimov',36,h-40);x.fillStyle='#d4af37';x.fillRect(w-110,70,70,52)}),.05));
+g.rotation.x=-.2;g.rotation.z=.1;g.scale.setScalar(1.1);return g}
+};
+document.querySelectorAll('.stage').forEach(function(el){
+var w=el.clientWidth,h=el.clientHeight,r=new T.WebGLRenderer({antialias:true,alpha:true});
+r.setPixelRatio(Math.min(devicePixelRatio,2));r.setSize(w,h);el.appendChild(r.domElement);
+var sc=new T.Scene(),cam=new T.PerspectiveCamera(35,w/h,.1,100);cam.position.z=9;
+sc.add(new T.AmbientLight(0xffffff,.7));var d=new T.DirectionalLight(0xffffff,1.1);d.position.set(3,4,6);sc.add(d);
+var p=new T.PointLight(0x88aaff,.8);p.position.set(-5,-2,3);sc.add(p);
+var o=B[el.dataset.k](),dn=false,lx=0,ty=0,vis=false;sc.add(o);
+el.addEventListener('pointerdown',function(e){dn=true;lx=e.clientX});
+addEventListener('pointerup',function(){dn=false});
+addEventListener('pointermove',function(e){if(dn){ty+=(e.clientX-lx)*.01;lx=e.clientX}});
+new IntersectionObserver(function(e){vis=e[0].isIntersecting}).observe(el);
+addEventListener('resize',function(){var w=el.clientWidth,h=el.clientHeight;r.setSize(w,h);cam.aspect=w/h;cam.updateProjectionMatrix()});
+(function loop(){requestAnimationFrame(loop);if(!vis)return;if(!dn)ty+=.006;o.rotation.y=ty;o.position.y=Math.sin(Date.now()/900)*.08;r.render(sc,cam)})();
+});
+})();
+</script></body></html>
